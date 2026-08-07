@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+
 # -------------------------------
 # File Paths
 # -------------------------------
@@ -227,8 +228,7 @@ def search_destinations(keyword):
 
     keyword = keyword.lower().strip()
 
-    print("\n========== SEARCH ==========")
-    print("Keyword:", keyword)
+
 
     matches = []
 
@@ -241,8 +241,7 @@ def search_destinations(keyword):
                 print("Matched:", file.name)
                 matches.append(file.stem)
 
-    print("Matches Found:", matches)
-    print("============================\n")
+   
 
     if matches:
         return {
@@ -299,6 +298,7 @@ tools = [
         "type": "function",
         "function": get_saved_trip_json
     }
+
 ]
 
 # ==========================================================

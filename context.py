@@ -54,8 +54,10 @@ Use the available tools whenever appropriate.
       This tool returns matching destination names.
 
 
+
 • recommend_destination
-    - Use when you need access to the available destination information.
+    - Use AFTER search_destinations() when recommending a destination.
+    - Use directly only when the user explicitly mentions a destination name (for example Goa, Jaipur or Ooty).
 
 # RULES
 

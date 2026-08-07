@@ -7,6 +7,7 @@ from context import system_prompt
 from tools import tools, handle_tool_calls
 
 
+
 # ------------------------------------------
 # Load Environment Variables
 # ------------------------------------------
@@ -24,6 +25,7 @@ client = OpenAI(
 )
 
 
+
 # ------------------------------------------
 # Chat Function
 # ------------------------------------------
@@ -31,12 +33,12 @@ client = OpenAI(
 def chat(message, history):
 
     # Start with the system prompt
-    messages = [
-        {
-            "role": "system",
-            "content": system_prompt
-        }
-    ]
+  messages = [
+    {
+        "role": "system",
+        "content": system_prompt
+    }
+]
 
     # ------------------------------------------
     # Convert Gradio history to OpenAI format
