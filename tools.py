@@ -150,24 +150,34 @@ save_user_preference_json = {
 # TOOL 3 : Recommend Destination
 # ==========================================================
 
-def recommend_destination():
+def recommend_destination(destination):
 
-    destination_information = []
+    file_path = DESTINATIONS_FOLDER / f"{destination}.txt"
 
-    for file in sorted(DESTINATIONS_FOLDER.glob("*.txt")):
-        with open(file, "r", encoding="utf-8") as f:
-            destination_information.append(f.read())
+    if file_path.exists():
+        with open(file_path, "r", encoding="utf-8") as f:
+            return f.read()
 
-    return "\n\n".join(destination_information)
+    return {
+        "status": "not_found",
+        "message": f"Sorry, information about '{destination}' is not available."
+    }
 
 
 recommend_destination_json = {
     "name": "recommend_destination",
-    "description": "Retrieve travel information for all supported destinations.",
+    "description": "Retrieve travel information for a specific destination.",
     "parameters": {
         "type": "object",
-        "properties": {},
-        "required": [],
+        "properties": {
+            "destination": {
+                "type": "string",
+                "description": "Name of the destination (e.g., Goa, Jaipur, Ooty)."
+            }
+        },
+        "required": [
+            "destination"
+        ],
         "additionalProperties": False
     }
 }
@@ -209,6 +219,60 @@ get_saved_trip_json = {
     }
 }
 
+def search_destinations(keyword):
+    """
+    Search all destination files for a keyword
+    and return matching destination names.
+    """
+
+    keyword = keyword.lower().strip()
+
+    print("\n========== SEARCH ==========")
+    print("Keyword:", keyword)
+
+    matches = []
+
+    for file in sorted(DESTINATIONS_FOLDER.glob("*.txt")):
+
+        with open(file, "r", encoding="utf-8") as f:
+            content = f.read().lower()
+
+            if keyword in content:
+                print("Matched:", file.name)
+                matches.append(file.stem)
+
+    print("Matches Found:", matches)
+    print("============================\n")
+
+    if matches:
+        return {
+            "status": "success",
+            "matches": matches
+        }
+
+    return {
+        "status": "not_found",
+        "matches": [],
+        "message": f"No destinations found for keyword '{keyword}'."
+    }
+search_destinations_json = {
+    "name": "search_destinations",
+    "description": "Search destinations using a keyword like beach, hill station, temple, shopping or adventure.",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "keyword": {
+                "type": "string",
+                "description": "Keyword to search."
+            }
+        },
+        "required": [
+            "keyword"
+        ],
+        "additionalProperties": False
+    }
+}
+
 
 # ==========================================================
 # Register Tools
@@ -225,6 +289,10 @@ tools = [
     },
     {
         "type": "function",
+        "function": search_destinations_json
+    },
+    {
+        "type": "function",
         "function": recommend_destination_json
     },
     {
@@ -232,7 +300,6 @@ tools = [
         "function": get_saved_trip_json
     }
 ]
-
 
 # ==========================================================
 # Execute Tool Calls

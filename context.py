@@ -39,6 +39,21 @@ Use the available tools whenever appropriate.
 • get_saved_trip
     - Use when the user asks to view a previously saved trip.
 
+• search_destinations
+    - Use FIRST whenever the user asks for destination recommendations
+      based on interests such as:
+        - beaches
+        - hill stations
+        - temples
+        - shopping
+        - adventure
+        - family trips
+        - honeymoon
+        - wildlife
+        - heritage
+      This tool returns matching destination names.
+
+
 • recommend_destination
     - Use when you need access to the available destination information.
 
